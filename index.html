@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Form Pembayaran Les</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 400px;
+        margin: auto;
+        padding: 20px;
+      }
+      input, select, textarea {
+        width: 100%;
+        margin-bottom: 12px;
+        padding: 8px;
+      }
+      button {
+        background-color: green;
+        color: white;
+        padding: 10px;
+        border: none;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Form Pembayaran Les</h2>
+    <form id="paymentForm">
+      <label>Nama Siswa:</label>
+      <input type="text" name="nama" required>
+
+      <label>Kelas:</label>
+      <select name="kelas">
+        <option>1 SD</option>
+        <option>2 SD</option>
+        <option>3 SD</option>
+        <option>4 SD</option>
+        <option>5 SD</option>
+        <option>6 SD</option>
+        <option>1 SMP</option>
+        <option>2 SMP</option>
+        <option>3 SMP</option>
+      </select>
+
+      <label>Nominal Bayar (Rp):</label>
+      <input type="number" name="nominal" required>
+
+      <label>Metode Pembayaran:</label>
+      <select name="metode">
+        <option>Transfer</option>
+        <option>Tunai</option>
+      </select>
+
+      <label>Catatan (opsional):</label>
+      <textarea name="catatan"></textarea>
+
+      <button type="submit">Kirim Pembayaran</button>
+    </form>
+
+    <p id="result"></p>
+
+    <script>
+      document.getElementById("paymentForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = new FormData(form);
+        try {
+          await fetch("https://script.google.com/macros/s/AKfycbxDWgj3OgY5TwCR8mC1mg0UTltYoAeQ18MJ2E5CvF_my9AiSe57ede_4CmkNBo2b8wY/exec", {
+            method: "POST",
+            body: data
+          });
+          document.getElementById("result").textContent = "✅ Data berhasil dikirim!";
+          form.reset();
+        } catch (err) {
+          document.getElementById("result").textContent = "❌ Gagal mengirim. Coba lagi.";
+        }
+      });
+    </script>
+  </body>
+</html>
